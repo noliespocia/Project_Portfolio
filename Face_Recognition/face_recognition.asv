@@ -1,0 +1,61 @@
+clc; clear; close all; % Start fresh
+
+% --- 1. Load Everything ---
+disp("Opening webcam...");
+c=webcam;
+disp("Loading network (myNet1)...");
+load myNet1;
+disp("Loading face detector...");
+faceDetector=vision.CascadeObjectDetector;
+
+% --- 2. Create a Figure Window (do this ONCE) ---
+disp("Starting recognition... Close figure window to stop.");
+hFig = figure;
+% Set a callback to stop the loop when the figure is closed
+set(hFig, 'CloseRequestFcn', 'global RUNNING; RUNNING = false;');
+global RUNNING;
+RUNNING = true;
+
+% --- 3. Recognition Loop ---
+while RUNNING
+    % Get a frame
+    e = c.snapshot;
+    
+    % Find all faces
+    bboxes = step(faceDetector,e);
+    
+    % Check if any faces were found
+    if ~isempty(bboxes)
+        % --- This is the new/edited part ---
+        
+        % We need to classify each face, so we loop
+        labels = strings(size(bboxes, 1), 1);
+        for i = 1:size(bboxes, 1)
+            % Get the bounding box for the current face
+            currentBBox = bboxes(i, :);
+            
+            % Crop the face
+            es = imcrop(e, currentBBox);
+            
+            % Resize for AlexNet
+            es = imresize(es, [227 227]);
+            
+            % Classify the face
+            labels(i) = string(classify(myNet1, es));
+        end
+
+        e = insertObjectAnnotation(e, 'rectangle', bboxes, labels, ...
+            'FontSize', 18, 'Color', 'green', 'LineWidth', 3);
+            imshow(e);
+            title('');
+    else
+        imshow(e);
+        title('No Face Detected');
+    end
+    drawnow;
+end
+
+disp("Stopping webcam.");
+clear c;
+close all;
+clear global RUNNING;
