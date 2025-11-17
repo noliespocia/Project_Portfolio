@@ -1,0 +1,5 @@
+path: C:/Users/nolie/OneDrive/Desktop/YOLO_MODEL_FOLDER/yolo_dataset
+train: images/train
+val: images/val
+nc: 2
+names: ['Player', 'Shuttle']
