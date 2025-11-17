@@ -1,5 +1,5 @@
-# Computer Vision System Portfolio
-The collection of all my Computer Vision Projects. This portfolio contains Computer Vision Projects using Python,  
+# My Project Portfolio
+This portfolio contains all the ongoing and finished projects during my 4th year in BS Computer Engineering, Some projects are currently under development process.  
 
 ## Video-based Match Analytics using YOLOv8m Model.
 The objectives of this project is to train the YOLOv8m model to detect badminton player and shuttlecock. Using the trained model, my aim is to detect the player, player speed, shuttlecock, shuttlecock speed, player heatmap, shuttlecock heatmap, determine if the shuttlecock is outside or inside, and count the number of shots per rally.
@@ -69,3 +69,5 @@ The objectives of this project is to utilize Alexnet in real-time face recogniti
 -   Early stopping via validation patience
 -   Live training progress visualization
 
+## Local Hosted Website
+Highlights the use of CRUD functionalities for database management.
